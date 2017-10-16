@@ -16,7 +16,7 @@
   <email>p@rdus.de</email>
   <active>yes</active>
  </lead>
- <date>2016-03-21</date>
+ <date>2017-10-17</date>
  <version>
   <release>2.0.10</release>
   <api>1.0.0</api>
@@ -31,13 +31,6 @@
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
-   <dir name="doc">
-    <dir name="Horde">
-     <dir name="Token">
-      <file name="COPYING" role="doc" />
-     </dir> <!-- /doc/Horde/Token -->
-    </dir> <!-- /doc/Horde -->
-   </dir> <!-- /doc -->
    <dir name="lib">
     <dir name="Horde">
      <dir name="Token">
@@ -338,6 +331,7 @@
      </dir> <!-- /test/Horde/Token -->
     </dir> <!-- /test/Horde -->
    </dir> <!-- /test -->
+   <file name="LICENSE" role="doc" />
   </dir> <!-- / -->
  </contents>
  <dependencies>
@@ -408,19 +402,18 @@
  </dependencies>
  <phprelease>
   <filelist>
-   <install as="COPYING" name="doc/Horde/Token/COPYING" />
    <install as="Horde/Token.php" name="lib/Horde/Token.php" />
    <install as="Horde/Token/Base.php" name="lib/Horde/Token/Base.php" />
    <install as="Horde/Token/Exception.php" name="lib/Horde/Token/Exception.php" />
+   <install as="Horde/Token/Exception/Expired.php" name="lib/Horde/Token/Exception/Expired.php" />
+   <install as="Horde/Token/Exception/Invalid.php" name="lib/Horde/Token/Exception/Invalid.php" />
+   <install as="Horde/Token/Exception/Used.php" name="lib/Horde/Token/Exception/Used.php" />
    <install as="Horde/Token/File.php" name="lib/Horde/Token/File.php" />
    <install as="Horde/Token/Mongo.php" name="lib/Horde/Token/Mongo.php" />
    <install as="Horde/Token/Null.php" name="lib/Horde/Token/Null.php" />
    <install as="Horde/Token/Sql.php" name="lib/Horde/Token/Sql.php" />
    <install as="Horde/Token/Translation.php" name="lib/Horde/Token/Translation.php" />
-   <install as="Horde/Token/Exception/Expired.php" name="lib/Horde/Token/Exception/Expired.php" />
-   <install as="Horde/Token/Exception/Invalid.php" name="lib/Horde/Token/Exception/Invalid.php" />
-   <install as="Horde/Token/Exception/Used.php" name="lib/Horde/Token/Exception/Used.php" />
-   <install as="locale/Horde_Token.pot" name="locale/Horde_Token.pot" />
+   <install as="LICENSE" name="LICENSE" />
    <install as="locale/ar/LC_MESSAGES/Horde_Token.mo" name="locale/ar/LC_MESSAGES/Horde_Token.mo" />
    <install as="locale/ar/LC_MESSAGES/Horde_Token.po" name="locale/ar/LC_MESSAGES/Horde_Token.po" />
    <install as="locale/bg/LC_MESSAGES/Horde_Token.mo" name="locale/bg/LC_MESSAGES/Horde_Token.mo" />
@@ -453,6 +446,7 @@
    <install as="locale/gl/LC_MESSAGES/Horde_Token.po" name="locale/gl/LC_MESSAGES/Horde_Token.po" />
    <install as="locale/he/LC_MESSAGES/Horde_Token.mo" name="locale/he/LC_MESSAGES/Horde_Token.mo" />
    <install as="locale/he/LC_MESSAGES/Horde_Token.po" name="locale/he/LC_MESSAGES/Horde_Token.po" />
+   <install as="locale/Horde_Token.pot" name="locale/Horde_Token.pot" />
    <install as="locale/hr/LC_MESSAGES/Horde_Token.mo" name="locale/hr/LC_MESSAGES/Horde_Token.mo" />
    <install as="locale/hr/LC_MESSAGES/Horde_Token.po" name="locale/hr/LC_MESSAGES/Horde_Token.po" />
    <install as="locale/hu/LC_MESSAGES/Horde_Token.mo" name="locale/hu/LC_MESSAGES/Horde_Token.mo" />
@@ -960,7 +954,7 @@ Converted to package.xml 2.0 for pear.horde.org
    <stability>
     <release>stable</release>
     <api>stable</api></stability>
-   <date>2016-03-21</date>
+   <date>2017-10-17</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
 * 
