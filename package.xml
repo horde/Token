@@ -16,7 +16,7 @@
   <email>p@rdus.de</email>
   <active>yes</active>
  </lead>
- <date>2017-10-17</date>
+ <date>2017-10-20</date>
  <version>
   <release>2.0.10</release>
   <api>1.0.0</api>
@@ -327,7 +327,6 @@
       <file name="BackendTestCase.php" role="test" />
       <file name="bootstrap.php" role="test" />
       <file name="conf.php.dist" role="test" />
-      <file name="phpunit.xml" role="test" />
      </dir> <!-- /test/Horde/Token -->
     </dir> <!-- /test/Horde -->
    </dir> <!-- /test -->
@@ -505,7 +504,6 @@
    <install as="Horde/Token/BackendTestCase.php" name="test/Horde/Token/BackendTestCase.php" />
    <install as="Horde/Token/bootstrap.php" name="test/Horde/Token/bootstrap.php" />
    <install as="Horde/Token/conf.php.dist" name="test/Horde/Token/conf.php.dist" />
-   <install as="Horde/Token/phpunit.xml" name="test/Horde/Token/phpunit.xml" />
    <install as="Horde/Token/Unit/FileTest.php" name="test/Horde/Token/Unit/FileTest.php" />
    <install as="Horde/Token/Unit/MongoTest.php" name="test/Horde/Token/Unit/MongoTest.php" />
    <install as="Horde/Token/Unit/SqlTest.php" name="test/Horde/Token/Unit/SqlTest.php" />
@@ -954,7 +952,7 @@ Converted to package.xml 2.0 for pear.horde.org
    <stability>
     <release>stable</release>
     <api>stable</api></stability>
-   <date>2017-10-17</date>
+   <date>2017-10-20</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
 * 
