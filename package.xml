@@ -530,7 +530,7 @@
    <date>2003-07-03</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
-Initial release as a PEAR package
+* Initial release as a PEAR package
    </notes>
   </release>
   <release>
@@ -545,7 +545,7 @@ Initial release as a PEAR package
    <date>2004-11-23</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
-Remove assumption of IPv4 IP address format
+* Remove assumption of IPv4 IP address format
    </notes>
   </release>
   <release>
@@ -576,7 +576,7 @@ Remove assumption of IPv4 IP address format
    <time>23:48:27</time>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
-Converted to package.xml 2.0 for pear.horde.org
+* Converted to package.xml 2.0 for pear.horde.org
    </notes>
   </release>
   <release>
