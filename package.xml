@@ -16,7 +16,7 @@
   <email>p@rdus.de</email>
   <active>yes</active>
  </lead>
- <date>2016-03-21</date>
+ <date>2017-10-30</date>
  <version>
   <release>2.0.10</release>
   <api>1.0.0</api>
@@ -34,6 +34,7 @@
    <dir name="doc">
     <dir name="Horde">
      <dir name="Token">
+      <file name="CHANGES" role="doc" />
       <file name="COPYING" role="doc" />
      </dir> <!-- /doc/Horde/Token -->
     </dir> <!-- /doc/Horde -->
@@ -408,6 +409,7 @@
  </dependencies>
  <phprelease>
   <filelist>
+   <install as="CHANGES" name="doc/Horde/Token/CHANGES" />
    <install as="COPYING" name="doc/Horde/Token/COPYING" />
    <install as="Horde/Token.php" name="lib/Horde/Token.php" />
    <install as="Horde/Token/Base.php" name="lib/Horde/Token/Base.php" />
@@ -960,7 +962,7 @@
    <stability>
     <release>stable</release>
     <api>stable</api></stability>
-   <date>2016-03-21</date>
+   <date>2017-10-30</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
 * 

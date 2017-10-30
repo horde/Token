@@ -1,0 +1,236 @@
+-----------
+v2.0.10-git
+-----------
+
+
+------
+v2.0.9
+------
+
+[jan] Update Greek translation (Limperis Antonis <limperis@cti.gr>).
+
+
+------
+v2.0.8
+------
+
+[jan] Mark PHP 7 as supported.
+
+
+------
+v2.0.7
+------
+
+[jan] Catch possible exceptions in shutdown methods.
+
+
+------
+v2.0.6
+------
+
+[jan] Support loading translations from Composer-installed package.
+[jan] Improve PSR-2 compatibility.
+
+
+------
+v2.0.5
+------
+
+[jan] Update Hungarian translation (Andras Galos <galosa@netinform.hu>).
+[jan] Update Danish translation (Erling Preben Hansen <erling@eph.dk>).
+
+
+------
+v2.0.4
+------
+
+[mms] Add MongoDB token backend.
+
+
+------
+v2.0.3
+------
+
+[jan] Update French translation (Paul De Vlieger
+      <paul.de_vlieger@moniut.univ-bpclermont.fr>).
+
+
+------
+v2.0.2
+------
+
+[jan] Update Basque translation (Ibon Igartua <ibon.igartua@ehu.es>).
+
+
+------
+v2.0.1
+------
+
+[jan] Update Dutch translation (Arjen de Korte <build+horde@de-korte.org>).
+
+
+------
+v2.0.0
+------
+
+First stable release for Horde 5.
+
+
+-----------
+v2.0.0beta1
+-----------
+
+First beta release for Horde 5.
+
+
+------------
+v2.0.0alpha1
+------------
+
+First alpha release for Horde 5.
+
+
+------
+v1.1.7
+------
+
+[jan] Update Brazilian Portuguese translation (Luis Felipe Marzagao
+      <duli@easylifeproject.org>).
+
+
+------
+v1.1.6
+------
+
+[jan] Update Finnish translation (Leena Heino <liinu@uta.fi>).
+
+
+------
+v1.1.5
+------
+
+[jan] Update German translation.
+[jan] Update Spanish translation.
+
+
+------
+v1.1.4
+------
+
+[jan] Fix translation (Bug #10831).
+
+
+------
+v1.1.3
+------
+
+[jan] Update Estonian translation.
+
+
+------
+v1.1.2
+------
+
+[jan] Fix skipping tests if PDO driver is not available.
+
+
+------
+v1.1.1
+------
+
+[jan] Update Croatian translation.
+[jan] Allow to run unit tests from installed package.
+
+
+------
+v1.1.0
+------
+
+[jan] Update Latvian translation.
+[gwr] Allow to specify a custom timeout or to disable it completely when
+      validating tokens.
+[jan] Update Lithuanian translation.
+[jan] Update Brazilian Portuguese translation.
+
+
+------
+v1.0.2
+------
+
+[jan] Updated Slovak translation.
+
+
+------
+v1.0.1
+------
+
+[jan] Updated Spanish translation.
+
+
+------
+v1.0.0
+------
+
+First stable release for Horde 4.
+
+
+---------
+v1.0.0RC2
+---------
+
+Second release candidate for Horde 4.
+
+
+---------
+v1.0.0RC1
+---------
+
+First release candidate for Horde 4.
+
+
+-----------
+v1.0.0beta1
+-----------
+
+First beta release for Horde 4.
+
+
+------------
+v1.0.0alpha1
+------------
+
+First alpha release for Horde 4.
+Remove Horde_Token::factory().
+Add translation support.
+Add support for timestamped tokens.
+Add Horde_Token_Exception::.
+Move driver code into sub-classes.
+Use exceptions, not PEAR_Errors.
+
+
+------
+v0.0.4
+------
+
+Converted to package.xml 2.0 for pear.horde.org
+
+
+------
+v0.0.3
+------
+
+Add support for separate read and write DB servers for the sql driver.
+
+
+------
+v0.0.2
+------
+
+Remove assumption of IPv4 IP address format
+
+
+------
+v0.0.1
+------
+
+Initial release as a PEAR package
