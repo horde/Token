@@ -9,16 +9,16 @@ type: library
 homepage: https://www.horde.org/libraries/Horde_Token
 authors:
   -
-    name: Chuck Hagenbuch
-    user: chuck
-    email: chuck@horde.org
-    active: true
-    role: lead
-  -
     name: Gunnar Wrobel
     user: wrobel
     email: p@rdus.de
     active: true
+    role: lead
+  -
+    name: Chuck Hagenbuch
+    user: chuck
+    email: chuck@horde.org
+    active: false
     role: lead
 version:
   release: 2.0.10
