@@ -2,8 +2,10 @@
 id: Token
 name: Token
 full: Tokens library
-description: |-
-  A library that provides a common abstracted interface into the various token generation mediums. It also includes all of the functions for retrieving, storing, and checking tokens.
+description: >-
+  A library that provides a common abstracted interface into the various token
+  generation mediums. It also includes all of the functions for retrieving,
+  storing, and checking tokens.
 list: dev
 type: library
 homepage: https://www.horde.org/libraries/Horde_Token
@@ -21,11 +23,11 @@ authors:
     active: false
     role: lead
 version:
-  release: 2.0.10
-  api: 1.0.0
+  release: 3.0.0alpha1
+  api: 3.0.0alpha1
 state:
-  release: stable
-  api: stable
+  release: alpha
+  api: alpha
 license:
   identifier: LGPL-2.1
   uri: http://www.horde.org/licenses/lgpl21
