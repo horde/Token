@@ -135,7 +135,7 @@ abstract class Horde_Token_BackendTestCase extends Horde_Test_Case
         $t = $this->_getBackend(array('token_lifetime' => 1));
         $token = $t->get('a');
         sleep(1);
-        $this->assertInternalType('array', $t->validate($token, 'a', 2));
+        $this->assertIsArray($t->validate($token, 'a', 2));
     }
 
     public function testDisableTimeoutException()
@@ -143,7 +143,7 @@ abstract class Horde_Token_BackendTestCase extends Horde_Test_Case
         $t = $this->_getBackend(array('token_lifetime' => 1));
         $token = $t->get('a');
         sleep(1);
-        $this->assertInternalType('array', $t->validate($token, 'a', -1));
+        $this->assertIsArray($t->validate($token, 'a', -1));
     }
 
     public function testIsValidUnique()
