@@ -27,7 +27,7 @@ class Horde_Token_Unit_SqlTest extends Horde_Token_BackendTestCase
 {
     private static $_db;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         $factory_db = new Horde_Test_Factory_Db();
 
@@ -42,7 +42,7 @@ class Horde_Token_Unit_SqlTest extends Horde_Token_BackendTestCase
         }
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!isset(self::$_db)) {
             $this->markTestSkipped('Sqlite not available.');

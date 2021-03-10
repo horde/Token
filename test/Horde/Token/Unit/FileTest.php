@@ -25,7 +25,7 @@
  */
 class Horde_Token_Unit_FileTest extends Horde_Token_BackendTestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         if (!empty($this->_temp_dir)) {
             $this->_rrmdir($this->_temp_dir);

@@ -46,7 +46,7 @@ class Horde_Token_Unit_MongoTest extends Horde_Token_BackendTestCase
         )));
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         if (!empty($this->_mongo)) {
             $this->_mongo->selectDB(null)->drop();
