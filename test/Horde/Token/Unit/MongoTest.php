@@ -20,7 +20,7 @@
  * @license   http://www.horde.org/licenses/lgpl21 LGPL 2.1
  * @package   Token
  */
-class Horde_Token_Unit_MongoTest extends Horde_Token_BackendTestCase
+class Horde_Token_MongoTest extends Horde_Token_BackendTestCase
 {
     private $_dbname = 'horde_token_mongodbtest';
     private $_mongo;
