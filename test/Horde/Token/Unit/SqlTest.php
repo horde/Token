@@ -23,7 +23,7 @@
  * @author   Gunnar Wrobel <wrobel@pardus.de>
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
  */
-class Horde_Token_Unit_SqlTest extends Horde_Token_BackendTestCase
+class Horde_Token_SqlTest extends Horde_Token_BackendTestCase
 {
     private static $_db;
 
