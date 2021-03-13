@@ -1,4 +1,5 @@
 {
+    "minimum-stability": "dev",
     "name": "horde/token",
     "description": "Tokens library",
     "type": "library",
@@ -25,16 +26,16 @@
     ],
     "require": {
         "php": "^7",
-        "horde/exception": "^3",
-        "horde/translation": "^3",
-        "horde/url": "^3",
-        "horde/util": "^3",
+        "horde/exception": "^3 || dev-FRAMEWORK_6_0",
+        "horde/translation": "^3 || dev-FRAMEWORK_6_0",
+        "horde/url": "^3 || dev-FRAMEWORK_6_0",
+        "horde/util": "^3 || dev-FRAMEWORK_6_0",
         "ext-hash": "*"
     },
     "suggest": {
-        "horde/db": "^3",
-        "horde/mongo": "^2",
-        "horde/test": "^3"
+        "horde/db": "^3 || dev-FRAMEWORK_6_0",
+        "horde/mongo": "^2 || dev-FRAMEWORK_6_0",
+        "horde/test": "^3 || dev-FRAMEWORK_6_0"
     },
     "autoload": {
         "psr-0": {
