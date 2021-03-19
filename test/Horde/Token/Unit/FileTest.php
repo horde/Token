@@ -9,6 +9,9 @@
  * @author   Gunnar Wrobel <wrobel@pardus.de>
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
  */
+namespace Horde\Token\Unit;
+use Horde\Token\BackendTestCase as BackendTestCase;
+use \Horde_Token_File;
 
 /**
  * Test the file based token backend.
@@ -23,7 +26,7 @@
  * @author   Gunnar Wrobel <wrobel@pardus.de>
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
  */
-class Horde_Token_FileTest extends Horde_Token_BackendTestCase
+class FileTest extends BackendTestCase
 {
     public function tearDown(): void
     {

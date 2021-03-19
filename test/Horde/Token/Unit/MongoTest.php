@@ -10,6 +10,8 @@
  * @license   http://www.horde.org/licenses/lgpl21 LGPL 2.1
  * @package   Token
  */
+namespace Horde\Token\Unit;
+use Horde\Token\BackendTestCase as BackendTestCase;
 
 /**
  * Test the MongoDB token backend.
@@ -20,7 +22,7 @@
  * @license   http://www.horde.org/licenses/lgpl21 LGPL 2.1
  * @package   Token
  */
-class Horde_Token_MongoTest extends Horde_Token_BackendTestCase
+class MongoTest extends BackendTestCase
 {
     private $_dbname = 'horde_token_mongodbtest';
     private $_mongo;
