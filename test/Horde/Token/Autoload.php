@@ -17,4 +17,6 @@
  */
 
 /** Load basic test case definitions */
-require_once __DIR__ . '/BackendTestCase.php';
+if (!class_exists('BackendTestCase')) {
+    require_once 'Horde/Token/BackendTestCase.php';
+}

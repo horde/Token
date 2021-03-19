@@ -9,6 +9,9 @@
  * @author   Gunnar Wrobel <wrobel@pardus.de>
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
  */
+namespace Horde\Token\Unit;
+use Horde\Token\BackendTestCase as BackendTestCase;
+use \Horde_Test_Factory_Db;
 
 /**
  * Test the SQL based token backend.
@@ -23,7 +26,7 @@
  * @author   Gunnar Wrobel <wrobel@pardus.de>
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
  */
-class Horde_Token_SqlTest extends Horde_Token_BackendTestCase
+class SqlTest extends BackendTestCase
 {
     private static $_db;
 
@@ -31,15 +34,13 @@ class Horde_Token_SqlTest extends Horde_Token_BackendTestCase
     {
         $factory_db = new Horde_Test_Factory_Db();
 
-        try {
+        if (class_exists('Horde_Db_Adapter_Pdo_Sqlite')) {
             self::$_db = $factory_db->create(array(
                 'migrations' => array(
                     'migrationsPath' => __DIR__ . '/../../../../migration/Horde/Token'
                 )
             ));
-        } catch (Horde_Test_Exception $e) {
-            return;
-        }
+        } 
     }
 
     public function setUp(): void
