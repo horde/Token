@@ -1,5 +1,4 @@
 {
-    "minimum-stability": "dev",
     "name": "horde/token",
     "description": "Tokens library",
     "type": "library",
@@ -17,11 +16,11 @@
             "role": "lead"
         }
     ],
-    "time": "2021-03-13",
+    "time": "2022-11-04",
     "repositories": [
         {
             "type": "composer",
-            "url": "https://horde-satis.maintaina.com/"
+            "url": "https://horde-satis.maintaina.com"
         }
     ],
     "require": {
@@ -32,6 +31,7 @@
         "horde/util": "^3 || dev-FRAMEWORK_6_0",
         "ext-hash": "*"
     },
+    "require-dev": {},
     "suggest": {
         "horde/db": "^3 || dev-FRAMEWORK_6_0",
         "horde/mongo": "^2 || dev-FRAMEWORK_6_0",
@@ -40,6 +40,16 @@
     "autoload": {
         "psr-0": {
             "Horde_Token": "lib/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Horde\\Token\\Test\\": "test/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "horde/horde-installer-plugin": true
         }
     }
 }
