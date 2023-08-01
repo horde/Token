@@ -23,6 +23,7 @@
  * @author   Gunnar Wrobel <wrobel@pardus.de>
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
  */
+#[\AllowDynamicProperties]
 class Horde_Token_Unit_FileTest extends Horde_Token_BackendTestCase
 {
     public function tearDown(): void
