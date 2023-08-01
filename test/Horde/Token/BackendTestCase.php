@@ -101,29 +101,23 @@ abstract class Horde_Token_BackendTestCase extends Horde_Test_Case
         $this->assertEquals(6, strlen($t->getNonce()));
     }
 
-    /**
-     * @expectedException Horde_Token_Exception_Invalid
-     */
     public function testInvalidTokenException()
     {
+        $this->expectException('Horde_Token_Exception_Invalid');
         $t = $this->_getBackend();
         $t->validate('something');
     }
 
-    /**
-     * @expectedException Horde_Token_Exception_Invalid
-     */
     public function testInvalidSeedException()
     {
+        $this->expectException('Horde_Token_Exception_Invalid');
         $t = $this->_getBackend();
         $t->validate($t->get('a'), 'b');
     }
 
-    /**
-     * @expectedException Horde_Token_Exception_Expired
-     */
     public function testTimeoutException()
     {
+        $this->expectException('Horde_Token_Exception_Expired');
         $t = $this->_getBackend(array('token_lifetime' => 1));
         $token = $t->get('a');
         sleep(1);
@@ -135,7 +129,7 @@ abstract class Horde_Token_BackendTestCase extends Horde_Test_Case
         $t = $this->_getBackend(array('token_lifetime' => 1));
         $token = $t->get('a');
         sleep(1);
-        $this->assertInternalType('array', $t->validate($token, 'a', 2));
+        $this->assertIsArray($t->validate($token, 'a', 2));
     }
 
     public function testDisableTimeoutException()
@@ -143,7 +137,7 @@ abstract class Horde_Token_BackendTestCase extends Horde_Test_Case
         $t = $this->_getBackend(array('token_lifetime' => 1));
         $token = $t->get('a');
         sleep(1);
-        $this->assertInternalType('array', $t->validate($token, 'a', -1));
+        $this->assertIsArray($t->validate($token, 'a', -1));
     }
 
     public function testIsValidUnique()
@@ -153,22 +147,18 @@ abstract class Horde_Token_BackendTestCase extends Horde_Test_Case
         $this->assertNull($t->validateUnique($token, 'a'));
     }
 
-    /**
-     * @expectedException Horde_Token_Exception_Used
-     */
     public function testIsValidAndUnusedException()
     {
+        $this->expectException('Horde_Token_Exception_Used');
         $t = $this->_getBackend();
         $token = $t->get('a');
         $t->validateUnique($token, 'a');
         $t->validateUnique($token, 'a');
     }
 
-    /**
-     * @expectedException Horde_Token_Exception_Used
-     */
     public function testIsValidAndValidateException()
     {
+        $this->expectException('Horde_Token_Exception_Used');
         $t = $this->_getBackend();
         $token = $t->get('a');
         $t->isValid($token, 'a', null, true);
