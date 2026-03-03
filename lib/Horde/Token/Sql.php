@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Token tracking implementation for PHP's PEAR database abstraction layer.
  *

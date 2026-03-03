@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The Horde_Token_Null:: class provides a null implementation of the token
  * driver.

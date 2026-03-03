@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Indicates an invalid token.
  *

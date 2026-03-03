@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Test the SQL based token backend.
  *
@@ -9,9 +10,11 @@
  * @author   Gunnar Wrobel <wrobel@pardus.de>
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
  */
+
 namespace Horde\Token\Unit;
+
 use Horde\Token\BackendTestCase as BackendTestCase;
-use \Horde_Test_Factory_Db;
+use Horde_Test_Factory_Db;
 
 /**
  * Test the SQL based token backend.
@@ -40,7 +43,7 @@ class SqlTest extends BackendTestCase
                     'migrationsPath' => __DIR__ . '/../../../../migration/Horde/Token'
                 )
             ));
-        } 
+        }
     }
 
     public function setUp(): void

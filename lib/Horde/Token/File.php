@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Token tracking implementation for local files.
  *
@@ -14,7 +15,7 @@
 class Horde_Token_File extends Horde_Token_Base
 {
     /* File prefix constant. */
-    const FILE_PREFIX = 'conn_';
+    public const FILE_PREFIX = 'conn_';
 
     /**
      * Handle for the open file descriptor.

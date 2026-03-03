@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The Horde_Token_Base:: class provides a common abstracted interface for
  * a token implementation.
@@ -123,9 +124,12 @@ abstract class Horde_Token_Base
      *
      * @return boolean  True if the token was valid.
      */
-    public function isValid($token, $seed = '', $timeout = null,
-                            $unique = false)
-    {
+    public function isValid(
+        $token,
+        $seed = '',
+        $timeout = null,
+        $unique = false
+    ) {
         list($nonce, $hash) = $this->_decode($token);
         if ($hash != $this->_hash($nonce . $seed)) {
             return false;

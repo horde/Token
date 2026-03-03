@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tests that each backend should fulfil.
  *
@@ -9,7 +10,9 @@
  * @author   Gunnar Wrobel <wrobel@pardus.de>
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
  */
+
 namespace Horde\Token;
+
 use Horde_Test_Case as TestCase;
 
 /**

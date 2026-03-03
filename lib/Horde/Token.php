@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The Horde_Token:: class provides a common abstracted interface into the
  * various token generation mediums. It also includes all of the
