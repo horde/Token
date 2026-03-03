@@ -1,27 +1,29 @@
 <?php
 
 /**
- * Copyright 2013-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2013-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
  *
  * @category  Horde
- * @copyright 2013-2017 Horde LLC
+ * @copyright 2013-2026 Horde LLC
  * @license   http://www.horde.org/licenses/lgpl21 LGPL 2.1
  * @package   Token
  */
 
-namespace Horde\Token\Unit;
+namespace Horde\Token\Test\Db;
 
-use Horde\Token\BackendTestCase as BackendTestCase;
+use Horde\Token\Test\Unit\Legacy\BackendTestCase;
+use Horde_Test_Factory_Mongo;
+use Horde_Token_Mongo;
 
 /**
  * Test the MongoDB token backend.
  *
  * @author    Gunnar Wrobel <wrobel@pardus.de>
  * @category  Horde
- * @copyright 2013-2017 Horde LLC
+ * @copyright 2013-2026 Horde LLC
  * @license   http://www.horde.org/licenses/lgpl21 LGPL 2.1
  * @package   Token
  */
@@ -59,5 +61,4 @@ class MongoTest extends BackendTestCase
 
         parent::tearDown();
     }
-
 }

@@ -3,7 +3,10 @@
 /**
  * Test the SQL based token backend.
  *
- * PHP version 5
+ * Copyright 2011-2026 Horde LLC (http://www.horde.org/)
+ *
+ * See the enclosed file LICENSE for license information (LGPL). If you
+ * did not receive this file, see http://www.horde.org/licenses/lgpl21.
  *
  * @category Horde
  * @package  Token
@@ -11,15 +14,16 @@
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
  */
 
-namespace Horde\Token\Unit;
+namespace Horde\Token\Test\Db;
 
-use Horde\Token\BackendTestCase as BackendTestCase;
+use Horde\Token\Test\Unit\Legacy\BackendTestCase;
 use Horde_Test_Factory_Db;
+use Horde_Token_Sql;
 
 /**
  * Test the SQL based token backend.
  *
- * Copyright 2011-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2011-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -64,5 +68,4 @@ class SqlTest extends BackendTestCase
         );
         return new Horde_Token_Sql($params);
     }
-
 }

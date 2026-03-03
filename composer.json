@@ -32,7 +32,9 @@
         "horde/util": "^3 || dev-FRAMEWORK_6_0",
         "ext-hash": "*"
     },
-    "require-dev": {},
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    },
     "suggest": {
         "horde/db": "^3 || dev-FRAMEWORK_6_0",
         "horde/mongo": "^2 || dev-FRAMEWORK_6_0",

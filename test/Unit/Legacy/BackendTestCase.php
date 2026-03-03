@@ -3,7 +3,10 @@
 /**
  * Tests that each backend should fulfil.
  *
- * PHP version 5
+ * Copyright 2010-2026 Horde LLC (http://www.horde.org/)
+ *
+ * See the enclosed file LICENSE for license information (LGPL). If you
+ * did not receive this file, see http://www.horde.org/licenses/lgpl21.
  *
  * @category Horde
  * @package  Token
@@ -11,14 +14,14 @@
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
  */
 
-namespace Horde\Token;
+namespace Horde\Token\Test\Unit\Legacy;
 
-use Horde_Test_Case as TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests that each backend should fulfil.
  *
- * Copyright 2010-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2010-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -30,6 +33,24 @@ use Horde_Test_Case as TestCase;
  */
 abstract class BackendTestCase extends TestCase
 {
+    /**
+     * Get test configuration from conf.php file.
+     *
+     * @param string $config Config name
+     * @param string $path   Path to search for conf.php
+     * @return mixed Config value or null
+     */
+    protected static function getConfig($config, $path)
+    {
+        $confFile = $path . '/conf.php';
+        if (!file_exists($confFile)) {
+            return null;
+        }
+
+        include $confFile;
+        return $conf ?? null;
+    }
+
     public function testToken()
     {
         $this->assertEquals(51, strlen($this->_getBackend()->get()));
