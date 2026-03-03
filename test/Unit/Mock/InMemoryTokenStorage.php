@@ -53,7 +53,7 @@ class InMemoryTokenStorage implements TokenStorageInterface
         $cutoff = time() - $timeout;
         $this->tokens = array_filter(
             $this->tokens,
-            fn($timestamp) => $timestamp > $cutoff
+            fn ($timestamp) => $timestamp > $cutoff
         );
     }
 
