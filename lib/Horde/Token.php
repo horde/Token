@@ -1,11 +1,11 @@
 <?php
 
 /**
- * The Horde_Token:: class provides a common abstracted interface into the
- * various token generation mediums. It also includes all of the
- * functions for retrieving, storing, and checking tokens.
+ * PSR-0 compatibility shim for Horde_Token
  *
- * Copyright 1999-2017 Horde LLC (http://www.horde.org/)
+ * @deprecated Use Horde\Token\Token instead
+ *
+ * Copyright 1999-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -15,18 +15,34 @@
  * @category Horde
  * @package  Token
  */
+
+use Horde\Token\TokenConfig;
+use Horde\Token\TokenGenerator;
+
+/**
+ * Static token utility class (PSR-0 compatibility layer)
+ *
+ * @deprecated Use Horde\Token\Token instead
+ * @category Horde
+ * @package  Token
+ */
 class Horde_Token
 {
     /**
-     * Generates a connection id and returns it.
+     * Generate a connection ID (deprecated)
      *
-     * @param string $seed  A unique ID to be included in the token.
+     * @deprecated Use Horde\Token\Token facade instead
      *
-     * @return string  The generated id string.
+     * @param string $seed Optional seed
+     * @return string Generated ID
      */
     public static function generateId($seed = '')
     {
-        return Horde_Url::uriB64Encode(pack('H*', hash('sha1', uniqid(mt_rand()) . $seed . (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : ''))));
-    }
+        // Use PSR-4 generator with temporary secret
+        $config = TokenConfig::default('deprecated-static-method');
+        $generator = new TokenGenerator($config);
+        $token = $generator->generate($seed);
 
+        return $token->token;
+    }
 }
