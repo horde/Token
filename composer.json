@@ -25,11 +25,7 @@
         }
     ],
     "require": {
-        "php": "^7.4 || ^8",
-        "horde/exception": "^3 || dev-FRAMEWORK_6_0",
-        "horde/translation": "^3 || dev-FRAMEWORK_6_0",
-        "horde/url": "^3 || dev-FRAMEWORK_6_0",
-        "horde/util": "^3 || dev-FRAMEWORK_6_0",
+        "php": "^8.1",
         "ext-hash": "*"
     },
     "require-dev": {
@@ -43,6 +39,9 @@
         "horde/test": "^3 || dev-FRAMEWORK_6_0"
     },
     "autoload": {
+        "psr-4": {
+            "Horde\\Token\\": "src/"
+        },
         "psr-0": {
             "Horde_Token": "lib/"
         }
