@@ -44,7 +44,7 @@ class SqlTest extends BackendTestCase
         if (class_exists('Horde_Db_Adapter_Pdo_Sqlite')) {
             self::$_db = $factory_db->create(array(
                 'migrations' => array(
-                    'migrationsPath' => __DIR__ . '/../../../../migration/Horde/Token'
+                    'migrationsPath' => __DIR__ . '/../../migration/Horde/Token'
                 )
             ));
         }
