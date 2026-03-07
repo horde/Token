@@ -1,8 +1,7 @@
 {
-    "minimum-stability": "dev",
     "name": "horde/token",
     "description": "Tokens library",
-    "type": "library",
+    "type": "horde-library",
     "homepage": "https://www.horde.org/libraries/Horde_Token",
     "license": "LGPL-2.1-only",
     "authors": [
@@ -17,33 +16,29 @@
             "role": "lead"
         }
     ],
-    "time": "2022-11-04",
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://horde-satis.maintaina.com"
-        }
-    ],
+    "time": "2026-03-07",
+    "repositories": [],
     "require": {
-        "php": "^8.1",
+        "horde/horde-installer-plugin": "dev-FRAMEWORK_6_0 || ^3 || ^2",
+        "php": "^7.4 || ^8",
+        "horde/exception": "^3 || dev-FRAMEWORK_6_0",
+        "horde/translation": "^3 || dev-FRAMEWORK_6_0",
+        "horde/url": "^3 || dev-FRAMEWORK_6_0",
+        "horde/util": "^3 || dev-FRAMEWORK_6_0",
         "ext-hash": "*"
     },
-    "require-dev": {
-        "phpunit/phpunit": "^11.5",
-        "horde/test": "dev-FRAMEWORK_6_0",
-        "horde/db": "dev-FRAMEWORK_6_0"
-    },
+    "require-dev": {},
     "suggest": {
         "horde/db": "^3 || dev-FRAMEWORK_6_0",
         "horde/mongo": "^2 || dev-FRAMEWORK_6_0",
         "horde/test": "^3 || dev-FRAMEWORK_6_0"
     },
     "autoload": {
-        "psr-4": {
-            "Horde\\Token\\": "src/"
-        },
         "psr-0": {
             "Horde_Token": "lib/"
+        },
+        "psr-4": {
+            "Horde\\Token\\": "src/"
         }
     },
     "autoload-dev": {
@@ -52,8 +47,11 @@
         }
     },
     "config": {
-        "allow-plugins": {
-            "horde/horde-installer-plugin": true
+        "allow-plugins": {}
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-FRAMEWORK_6_0": "3.x-dev"
         }
     }
 }
