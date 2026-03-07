@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2013-2017 Horde LLC (http://www.horde.org/)
  *
@@ -23,9 +24,9 @@
 class Horde_Token_Mongo extends Horde_Token_Base
 {
     /* Field names. */
-    const ADDRESS = 'addr';
-    const TID = 'tid';
-    const TIMESTAMP = 'ts';
+    public const ADDRESS = 'addr';
+    public const TID = 'tid';
+    public const TIMESTAMP = 'ts';
 
     /**
      * The MongoDB Collection object for the token data.

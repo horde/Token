@@ -1,19 +1,11 @@
 <?php
+
 /**
- * Token tracking implementation for PHP's PEAR database abstraction layer.
+ * PSR-0 compatibility shim for SQL-based token storage
  *
- * The table structure for the tokens is as follows:
- * <pre>
- * CREATE TABLE horde_tokens (
- *     token_address    VARCHAR(100) NOT NULL,
- *     token_id         VARCHAR(32) NOT NULL,
- *     token_timestamp  BIGINT NOT NULL,
+ * @deprecated Use Horde\Token\Token::sql() instead
  *
- *     PRIMARY KEY (token_address, token_id)
- * );
- * </pre>
- *
- * Copyright 1999-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 1999-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -22,27 +14,37 @@
  * @category Horde
  * @package  Token
  */
+
+use Horde\Token\Storage\SqlStorage;
+use Horde\Token\Storage\TokenStorageInterface;
+
+/**
+ * SQL-based token storage (PSR-0 compatibility layer)
+ *
+ * @deprecated Use Horde\Token\Token::sql() instead
+ * @category Horde
+ * @package  Token
+ */
 class Horde_Token_Sql extends Horde_Token_Base
 {
     /**
-     * Handle for the database connection.
+     * Database connection
      *
      * @var Horde_Db_Adapter
      */
     protected $_db;
 
     /**
-     * Constructor.
+     * PSR-4 storage
      *
-     * @see Horde_Token_Base::__construct() for more parameters.
+     * @var SqlStorage
+     */
+    private $_storage;
+
+    /**
+     * Constructor
      *
-     * @param array $params  Required parameters:
-     * - db (Horde_Db_Adapter): The DB instance.
-     * Optional parameters:
-     * - table (string): The name of the tokens table.
-     *                   DEFAULT: 'horde_tokens'
-     * </pre>
-     *
+     * @param array $params Configuration parameters
      * @throws Horde_Token_Exception
      */
     public function __construct($params = array())
@@ -50,6 +52,7 @@ class Horde_Token_Sql extends Horde_Token_Base
         if (!isset($params['db'])) {
             throw new Horde_Token_Exception('Missing db parameter.');
         }
+
         $this->_db = $params['db'];
         unset($params['db']);
 
@@ -61,70 +64,64 @@ class Horde_Token_Sql extends Horde_Token_Base
     }
 
     /**
-     * Delete all expired connection IDs.
+     * Create PSR-4 storage backend
      *
-     * @throws Horde_Token_Exception
+     * @return TokenStorageInterface
      */
-    public function purge()
+    protected function _createPsr4Storage()
     {
-        /* Build SQL query. */
-        $query = 'DELETE FROM ' . $this->_params['table']
-            . ' WHERE token_timestamp < ?';
-
-        $values = array(time() - $this->_params['timeout']);
-
-        /* Return an error if the update fails. */
-        try {
-            $this->_db->delete($query, $values);
-        } catch (Horde_Db_Exception $e) {
-            throw new Horde_Token_Exception($e);
-        }
+        $this->_storage = new SqlStorage(
+            $this->_db,
+            $this->_params['timeout'],
+            $this->_params['table']
+        );
+        return $this->_storage;
     }
 
     /**
-     * Does the token exist?
+     * Check if token exists
      *
-     * @param string $tokenID  Token ID.
-     *
-     * @return boolean  True if the token exists.
+     * @param string $tokenID Token ID
+     * @return boolean True if exists
      * @throws Horde_Token_Exception
      */
     public function exists($tokenID)
     {
-        /* Build SQL query. */
-        $query = 'SELECT token_id FROM ' . $this->_params['table']
-            . ' WHERE token_address = ? AND token_id = ?';
-
-        $values = array($this->_encodeRemoteAddress(), $tokenID);
-
         try {
-            return $this->_db->selectValue($query, $values);
-        } catch (Horde_Db_Exception $e) {
-            return false;
+            return $this->_storage->exists($tokenID);
+        } catch (\Horde\Token\Exception\StorageException $e) {
+            throw new Horde_Token_Exception($e->getMessage(), 0, $e);
         }
     }
 
     /**
-     * Add a token ID.
+     * Add token
      *
-     * @param string $tokenID  Token ID to add.
-     *
+     * @param string $tokenID Token ID
+     * @return void
      * @throws Horde_Token_Exception
      */
     public function add($tokenID)
     {
-        /* Build SQL query. */
-        $query = 'INSERT INTO ' . $this->_params['table']
-            . ' (token_address, token_id, token_timestamp)'
-            . ' VALUES (?, ?, ?)';
-
-        $values = array($this->_encodeRemoteAddress(), $tokenID, time());
-
         try {
-            $this->_db->insert($query, $values);
-        } catch (Horde_Db_Exception $e) {
-            throw new Horde_Token_Exception($e);
+            $this->_storage->add($tokenID);
+        } catch (\Horde\Token\Exception\StorageException $e) {
+            throw new Horde_Token_Exception($e->getMessage(), 0, $e);
         }
     }
 
+    /**
+     * Purge expired tokens
+     *
+     * @return void
+     * @throws Horde_Token_Exception
+     */
+    public function purge()
+    {
+        try {
+            $this->_storage->purge();
+        } catch (\Horde\Token\Exception\StorageException $e) {
+            throw new Horde_Token_Exception($e->getMessage(), 0, $e);
+        }
+    }
 }

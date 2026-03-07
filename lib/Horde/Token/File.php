@@ -1,8 +1,11 @@
 <?php
+
 /**
- * Token tracking implementation for local files.
+ * PSR-0 compatibility shim for file-based token storage
  *
- * Copyright 1999-2017 Horde LLC (http://www.horde.org/)
+ * @deprecated Use Horde\Token\Token::file() instead
+ *
+ * Copyright 1999-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -11,33 +14,30 @@
  * @category Horde
  * @package  Token
  */
+
+use Horde\Token\Storage\FileStorage;
+use Horde\Token\Storage\TokenStorageInterface;
+
+/**
+ * File-based token storage (PSR-0 compatibility layer)
+ *
+ * @deprecated Use Horde\Token\Token::file() instead
+ * @category Horde
+ * @package  Token
+ */
 class Horde_Token_File extends Horde_Token_Base
 {
-    /* File prefix constant. */
-    const FILE_PREFIX = 'conn_';
-
     /**
-     * Handle for the open file descriptor.
+     * PSR-4 storage
      *
-     * @var resource
+     * @var FileStorage
      */
-    protected $_fd = false;
+    private $_storage;
 
     /**
-     * Boolean indicating whether or not we have an open file descriptor.
+     * Constructor
      *
-     * @var boolean
-     */
-    protected $_connected = false;
-
-    /**
-     * Constructor.
-     *
-     * @see Horde_Token_Base::__construct() for more parameters.
-     *
-     * @param array $params  Optional parameters:
-     * - token_dir (string): The directory where to keep token files.
-     *                       DEFAULT: System temporary directory
+     * @param array $params Configuration parameters
      */
     public function __construct($params = array())
     {
@@ -49,121 +49,63 @@ class Horde_Token_File extends Horde_Token_Base
     }
 
     /**
-     * Destructor.
+     * Create PSR-4 storage backend
+     *
+     * @return TokenStorageInterface
      */
-    public function __destruct()
+    protected function _createPsr4Storage()
     {
-        try {
-            $this->_disconnect(false);
-        } catch (Horde_Token_Exception $e) {
-        }
+        $this->_storage = new FileStorage(
+            $this->_params['token_dir'],
+            $this->_params['timeout']
+        );
+        return $this->_storage;
     }
 
     /**
-     * Delete all expired connection IDs.
+     * Check if token exists
      *
-     * @throws Horde_Token_Exception
-     */
-    public function purge()
-    {
-        // Make sure we have no open file descriptors before unlinking
-        // files.
-        $this->_disconnect();
-
-        /* Build stub file list. */
-        try {
-            $di = new DirectoryIterator($this->_params['token_dir']);
-        } catch (UnexpectedValueException $e) {
-            throw new Horde_Token_Exception('Unable to open token directory');
-        }
-
-        /* Find expired stub files */
-        foreach ($di as $val) {
-            if ($val->isFile() &&
-                (strpos($val, self::FILE_PREFIX) === 0) &&
-                (time() - $val->getMTime() >= $this->_params['timeout']) &&
-                !@unlink($val->getPathname())) {
-                throw new Horde_Token_Exception('Unable to purge token file.');
-            }
-        }
-    }
-
-    /**
-     * Does the token exist?
-     *
-     * @param string $tokenID  Token ID.
-     *
-     * @return boolean  True if the token exists.
+     * @param string $tokenID Token ID
+     * @return boolean True if exists
      * @throws Horde_Token_Exception
      */
     public function exists($tokenID)
     {
-        $this->_connect();
-
-        /* Find already used IDs. */
-        $token = base64_encode($tokenID);
-        foreach (file($this->_params['token_dir'] . '/' . self::FILE_PREFIX . $this->_encodeRemoteAddress()) as $val) {
-            if (rtrim($val) == $token) {
-                return true;
-            }
+        try {
+            return $this->_storage->exists($tokenID);
+        } catch (\Horde\Token\Exception\StorageException $e) {
+            throw new Horde_Token_Exception($e->getMessage(), 0, $e);
         }
-
-        return false;
     }
 
     /**
-     * Add a token ID.
+     * Add token
      *
-     * @param string $tokenID  Token ID to add.
-     *
+     * @param string $tokenID Token ID
+     * @return void
      * @throws Horde_Token_Exception
      */
     public function add($tokenID)
     {
-        $this->_connect();
-
-        /* Write the entry. */
-        $token = base64_encode($tokenID);
-        fwrite($this->_fd, $token . "\n");
-
-        $this->_disconnect();
+        try {
+            $this->_storage->add($tokenID);
+        } catch (\Horde\Token\Exception\StorageException $e) {
+            throw new Horde_Token_Exception($e->getMessage(), 0, $e);
+        }
     }
 
     /**
-     * Opens a file descriptor to a new or existing file.
+     * Purge expired tokens
      *
+     * @return void
      * @throws Horde_Token_Exception
      */
-    protected function _connect()
+    public function purge()
     {
-        if ($this->_connected) {
-            return;
-        }
-
-        // Open a file descriptor to the token stub file.
-        $this->_fd = @fopen($this->_params['token_dir'] . '/' . self::FILE_PREFIX . $this->_encodeRemoteAddress(), 'a');
-        if (!$this->_fd) {
-            throw new Horde_Token_Exception('Failed to open token file.');
-        }
-
-        $this->_connected = true;
-    }
-
-    /**
-     * Closes the file descriptor.
-     *
-     * @param boolean $error  Throw exception on error?
-     *
-     * @throws Horde_Token_Exception
-     */
-    protected function _disconnect($error = true)
-    {
-        if ($this->_connected) {
-            $this->_connected = false;
-            if (!fclose($this->_fd) && $error) {
-                throw new Horde_Token_Exception('Unable to close file descriptors');
-            }
+        try {
+            $this->_storage->purge();
+        } catch (\Horde\Token\Exception\StorageException $e) {
+            throw new Horde_Token_Exception($e->getMessage(), 0, $e);
         }
     }
-
 }

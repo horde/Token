@@ -1,22 +1,27 @@
 <?php
+
 /**
  * Test the file based token backend.
  *
- * PHP version 5
+ * Copyright 2010-2026 Horde LLC (http://www.horde.org/)
+ *
+ * See the enclosed file LICENSE for license information (LGPL). If you
+ * did not receive this file, see http://www.horde.org/licenses/lgpl21.
  *
  * @category Horde
  * @package  Token
  * @author   Gunnar Wrobel <wrobel@pardus.de>
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
  */
-namespace Horde\Token\Unit;
-use Horde\Token\BackendTestCase as BackendTestCase;
-use \Horde_Token_File;
+
+namespace Horde\Token\Test\Unit\Legacy;
+
+use Horde_Token_File;
 
 /**
  * Test the file based token backend.
  *
- * Copyright 2010-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2010-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -28,6 +33,8 @@ use \Horde_Token_File;
  */
 class FileTest extends BackendTestCase
 {
+    private ?string $_temp_dir = null;
+
     public function tearDown(): void
     {
         if (!empty($this->_temp_dir)) {

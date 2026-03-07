@@ -1,4 +1,5 @@
 <?php
+
 class HordeTokenBaseTables extends Horde_Db_Migration_Base
 {
     public function up()
