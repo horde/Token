@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Increase token_id column length for new token format
  *
