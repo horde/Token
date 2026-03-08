@@ -51,6 +51,21 @@
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
   notes: ~
+3.0.0-alpha7:
+  api: 3.0.0-alpha7
+  state:
+    release: alpha
+    api: alpha
+  date: 2026-03-08
+  license:
+    identifier: LGPL-2.1-only
+    uri: https://spdx.org/licenses/LGPL-2.1-only.html
+  notes: |-
+    test: add comprehensive tests for Token facade class
+    style: Apply php-cs-fixer
+    feat: Add migration to extend token storage. The new tokens are longer and more cryptographically secure than the old tokens. Also we are switching towards libsodium and off older basis.
+    fix: add src/ directory to PHPUnit coverage source
+    feat: add migration to increase token_id column length
 3.0.0-alpha6:
   api: 3.0.0-alpha6
   state:

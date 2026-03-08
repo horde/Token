@@ -26,31 +26,32 @@ use Horde_Token_Mongo;
  * @copyright 2013-2026 Horde LLC
  * @license   http://www.horde.org/licenses/lgpl21 LGPL 2.1
  * @package   Token
+ * @coversNothing
  */
 class MongoTest extends BackendTestCase
 {
     private $_dbname = 'horde_token_mongodbtest';
     private $_mongo;
 
-    protected function _getBackend(array $params = array())
+    protected function _getBackend(array $params = [])
     {
-        if (($config = self::getConfig('TOKEN_MONGO_TEST_CONFIG', __DIR__ . '/..')) &&
-            isset($config['token']['mongo'])) {
+        if (($config = self::getConfig('TOKEN_MONGO_TEST_CONFIG', __DIR__ . '/..'))
+            && isset($config['token']['mongo'])) {
             $factory = new Horde_Test_Factory_Mongo();
-            $this->_mongo = $factory->create(array(
+            $this->_mongo = $factory->create([
                 'config' => $config['token']['mongo'],
-                'dbname' => $this->_dbname
-            ));
+                'dbname' => $this->_dbname,
+            ]);
         }
 
         if (empty($this->_mongo)) {
             $this->markTestSkipped('MongoDB not available.');
         }
 
-        return new Horde_Token_Mongo(array_merge($params, array(
+        return new Horde_Token_Mongo(array_merge($params, [
             'mongo_db' => $this->_mongo,
-            'secret' => 'abc'
-        )));
+            'secret' => 'abc',
+        ]));
     }
 
     public function tearDown(): void

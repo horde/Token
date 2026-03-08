@@ -32,6 +32,7 @@ use Horde_Token_Sql;
  * @package  Token
  * @author   Gunnar Wrobel <wrobel@pardus.de>
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
+ * @coversNothing
  */
 class SqlTest extends BackendTestCase
 {
@@ -42,11 +43,11 @@ class SqlTest extends BackendTestCase
         $factory_db = new Horde_Test_Factory_Db();
 
         if (class_exists('Horde_Db_Adapter_Pdo_Sqlite')) {
-            self::$_db = $factory_db->create(array(
-                'migrations' => array(
-                    'migrationsPath' => __DIR__ . '/../../migration/Horde/Token'
-                )
-            ));
+            self::$_db = $factory_db->create([
+                'migrations' => [
+                    'migrationsPath' => __DIR__ . '/../../migration/Horde/Token',
+                ],
+            ]);
         }
     }
 
@@ -57,13 +58,13 @@ class SqlTest extends BackendTestCase
         }
     }
 
-    protected function _getBackend(array $params = array())
+    protected function _getBackend(array $params = [])
     {
         $params = array_merge(
-            array(
+            [
                 'secret' => 'abc',
-                'db' => self::$_db
-            ),
+                'db' => self::$_db,
+            ],
             $params
         );
         return new Horde_Token_Sql($params);

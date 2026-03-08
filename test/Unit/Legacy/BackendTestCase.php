@@ -99,7 +99,7 @@ abstract class BackendTestCase extends TestCase
 
     public function testTimeoutAfterOneSecond()
     {
-        $t = $this->_getBackend(array('token_lifetime' => 1));
+        $t = $this->_getBackend(['token_lifetime' => 1]);
         $token = $t->get('a');
         sleep(1);
         $this->assertFalse($t->isValid($token, 'a', 1));
@@ -109,7 +109,7 @@ abstract class BackendTestCase extends TestCase
 
     public function testTokenLifetimeParameter()
     {
-        $t = $this->_getBackend(array('token_lifetime' => -1));
+        $t = $this->_getBackend(['token_lifetime' => -1]);
         $this->assertTrue($t->isValid($t->get()));
     }
 
@@ -144,7 +144,7 @@ abstract class BackendTestCase extends TestCase
     public function testTimeoutException()
     {
         $this->expectException('Horde_Token_Exception_Expired');
-        $t = $this->_getBackend(array('token_lifetime' => 1));
+        $t = $this->_getBackend(['token_lifetime' => 1]);
         $token = $t->get('a');
         sleep(1);
         $t->validate($token, 'a');
@@ -152,7 +152,7 @@ abstract class BackendTestCase extends TestCase
 
     public function testOverrideTimeoutException()
     {
-        $t = $this->_getBackend(array('token_lifetime' => 1));
+        $t = $this->_getBackend(['token_lifetime' => 1]);
         $token = $t->get('a');
         sleep(1);
         $this->assertIsArray($t->validate($token, 'a', 2));
@@ -160,7 +160,7 @@ abstract class BackendTestCase extends TestCase
 
     public function testDisableTimeoutException()
     {
-        $t = $this->_getBackend(array('token_lifetime' => 1));
+        $t = $this->_getBackend(['token_lifetime' => 1]);
         $token = $t->get('a');
         sleep(1);
         $this->assertIsArray($t->validate($token, 'a', -1));
@@ -191,5 +191,5 @@ abstract class BackendTestCase extends TestCase
         $t->validateUnique($token, 'a');
     }
 
-    abstract protected function _getBackend(array $params = array());
+    abstract protected function _getBackend(array $params = []);
 }

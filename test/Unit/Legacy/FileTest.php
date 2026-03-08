@@ -30,6 +30,7 @@ use Horde_Token_File;
  * @package  Token
  * @author   Gunnar Wrobel <wrobel@pardus.de>
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
+ * @coversNothing
  */
 class FileTest extends BackendTestCase
 {
@@ -42,13 +43,13 @@ class FileTest extends BackendTestCase
         }
     }
 
-    protected function _getBackend(array $params = array())
+    protected function _getBackend(array $params = [])
     {
         $params = array_merge(
-            array(
+            [
                 'secret' => 'abc',
-                'token_dir' => $this->_getTemporaryDirectory()
-            ),
+                'token_dir' => $this->_getTemporaryDirectory(),
+            ],
             $params
         );
         return new Horde_Token_File($params);

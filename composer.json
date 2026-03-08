@@ -16,7 +16,7 @@
             "role": "lead"
         }
     ],
-    "time": "2026-03-07",
+    "time": "2026-03-08",
     "repositories": [],
     "require": {
         "horde/horde-installer-plugin": "dev-FRAMEWORK_6_0 || ^3 || ^2",
@@ -27,7 +27,10 @@
         "horde/util": "^3 || dev-FRAMEWORK_6_0",
         "ext-hash": "*"
     },
-    "require-dev": {},
+    "require-dev": {
+        "horde/db": "^3 || dev-FRAMEWORK_6_0",
+        "horde/test": "^3 || dev-FRAMEWORK_6_0"
+    },
     "suggest": {
         "horde/db": "^3 || dev-FRAMEWORK_6_0",
         "horde/mongo": "^2 || dev-FRAMEWORK_6_0",
@@ -47,7 +50,9 @@
         }
     },
     "config": {
-        "allow-plugins": {}
+        "allow-plugins": {
+            "horde/horde-installer-plugin": true
+        }
     },
     "extra": {
         "branch-alias": {
