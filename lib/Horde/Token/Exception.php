@@ -3,7 +3,7 @@
 /**
  * Exception handler for the Horde_Token package.
  *
- * Copyright 2010-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2010-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -12,6 +12,4 @@
  * @category Horde
  * @package  Token
  */
-class Horde_Token_Exception extends Horde_Exception_Wrapped
-{
-}
+class Horde_Token_Exception extends Horde_Exception_Wrapped {}

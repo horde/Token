@@ -17,6 +17,8 @@ declare(strict_types=1);
 
 namespace Horde\Token\Exception;
 
+use Exception;
+
 /**
  * Base exception for all token errors
  *
@@ -24,6 +26,4 @@ namespace Horde\Token\Exception;
  * @package  Token
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
  */
-class TokenException extends \Exception
-{
-}
+class TokenException extends Exception {}

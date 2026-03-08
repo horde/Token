@@ -51,8 +51,7 @@ final class SqlStorage implements TokenStorageInterface
         private readonly Horde_Db_Adapter $db,
         private readonly int $timeout,
         private readonly string $table = 'horde_tokens'
-    ) {
-    }
+    ) {}
 
     /**
      * Check if token exists in storage

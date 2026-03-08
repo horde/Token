@@ -33,8 +33,7 @@ final readonly class GeneratedToken
     public function __construct(
         public string $token,
         public ?int $expiresAt = null
-    ) {
-    }
+    ) {}
 
     /**
      * Check if token is expired

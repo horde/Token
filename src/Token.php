@@ -46,8 +46,7 @@ final class Token
         private readonly TokenValidator $validator,
         private readonly TokenStorageInterface $storage,
         private readonly TokenConfig $config
-    ) {
-    }
+    ) {}
 
     /**
      * Create token service with file storage

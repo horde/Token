@@ -24,6 +24,7 @@ use Horde\Token\Internal\Encoder;
 use Horde\Token\Internal\Nonce;
 use Horde\Token\Internal\Signer;
 use Horde\Token\Storage\TokenStorageInterface;
+use InvalidArgumentException;
 
 /**
  * Token validation logic with optional storage-based replay protection
@@ -47,8 +48,7 @@ final class TokenValidator
     public function __construct(
         private readonly TokenConfig $config,
         private readonly TokenStorageInterface $storage
-    ) {
-    }
+    ) {}
 
     /**
      * Check if token is valid (non-throwing version)
@@ -74,7 +74,7 @@ final class TokenValidator
         try {
             $this->validateInternal($token, $seed, $timeout, unique: false);
             return true;
-        } catch (InvalidTokenException | ExpiredTokenException) {
+        } catch (InvalidTokenException|ExpiredTokenException) {
             return false;
         }
     }
@@ -128,7 +128,7 @@ final class TokenValidator
         // Decode token from Base64 URL format
         try {
             $decoded = Encoder::decode($token);
-        } catch (\InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             throw new InvalidTokenException('Invalid token encoding: ' . $e->getMessage(), 0, $e);
         }
 

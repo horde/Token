@@ -24,6 +24,4 @@ namespace Horde\Token\Exception;
  * @package  Token
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
  */
-class UsedTokenException extends TokenException
-{
-}
+class UsedTokenException extends TokenException {}

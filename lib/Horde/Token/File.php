@@ -39,11 +39,11 @@ class Horde_Token_File extends Horde_Token_Base
      *
      * @param array $params Configuration parameters
      */
-    public function __construct($params = array())
+    public function __construct($params = [])
     {
-        $params = array_merge(array(
-            'token_dir' => sys_get_temp_dir()
-        ), $params);
+        $params = array_merge([
+            'token_dir' => sys_get_temp_dir(),
+        ], $params);
 
         parent::__construct($params);
     }
@@ -73,7 +73,7 @@ class Horde_Token_File extends Horde_Token_Base
     {
         try {
             return $this->_storage->exists($tokenID);
-        } catch (\Horde\Token\Exception\StorageException $e) {
+        } catch (Horde\Token\Exception\StorageException $e) {
             throw new Horde_Token_Exception($e->getMessage(), 0, $e);
         }
     }
@@ -89,7 +89,7 @@ class Horde_Token_File extends Horde_Token_Base
     {
         try {
             $this->_storage->add($tokenID);
-        } catch (\Horde\Token\Exception\StorageException $e) {
+        } catch (Horde\Token\Exception\StorageException $e) {
             throw new Horde_Token_Exception($e->getMessage(), 0, $e);
         }
     }
@@ -104,7 +104,7 @@ class Horde_Token_File extends Horde_Token_Base
     {
         try {
             $this->_storage->purge();
-        } catch (\Horde\Token\Exception\StorageException $e) {
+        } catch (Horde\Token\Exception\StorageException $e) {
             throw new Horde_Token_Exception($e->getMessage(), 0, $e);
         }
     }

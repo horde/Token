@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2013-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2013-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -42,15 +42,15 @@ class Horde_Token_Mongo extends Horde_Token_Base
      *   - collection: (string) The collection name.
      *   - mongo_db: [REQUIRED] (Horde_Mongo_Client) A MongoDB client object.
      */
-    public function __construct(array $params = array())
+    public function __construct(array $params = [])
     {
         if (!isset($params['mongo_db'])) {
             throw new InvalidArgumentException('Missing mongo_db parameter.');
         }
 
-        parent::__construct(array_merge(array(
-            'collection' => 'horde_cache'
-        ), $params));
+        parent::__construct(array_merge([
+            'collection' => 'horde_cache',
+        ], $params));
 
         $this->_db = $this->_params['mongo_db']->selectCollection(null, $this->_params['collection']);
     }
@@ -60,11 +60,11 @@ class Horde_Token_Mongo extends Horde_Token_Base
     public function purge()
     {
         try {
-            $this->_db->remove(array(
-                self::TIMESTAMP => array(
-                    '$lt' => (time() - $this->_params['timeout'])
-                )
-            ));
+            $this->_db->remove([
+                self::TIMESTAMP => [
+                    '$lt' => (time() - $this->_params['timeout']),
+                ],
+            ]);
         } catch (MongoException $e) {
             throw new Horde_Token_Exception($e);
         }
@@ -75,10 +75,10 @@ class Horde_Token_Mongo extends Horde_Token_Base
     public function exists($tokenID)
     {
         try {
-            return !is_null($this->_db->findOne(array(
+            return !is_null($this->_db->findOne([
                 self::ADDRESS => $this->_encodeRemoteAddress(),
-                self::TID => $tokenID
-            )));
+                self::TID => $tokenID,
+            ]));
         } catch (MongoException $e) {
             return false;
         }
@@ -88,17 +88,17 @@ class Horde_Token_Mongo extends Horde_Token_Base
      */
     public function add($tokenID)
     {
-        $data = array(
+        $data = [
             self::ADDRESS => $this->_encodeRemoteAddress(),
-            self::TID => $tokenID
-        );
+            self::TID => $tokenID,
+        ];
 
         try {
-            $this->_db->update($data, array(
-                '$set' => array_merge($data, array(self::TIMESTAMP => time()))
-            ), array(
-                'upsert' => true
-            ));
+            $this->_db->update($data, [
+                '$set' => array_merge($data, [self::TIMESTAMP => time()]),
+            ], [
+                'upsert' => true,
+            ]);
         } catch (MongoException $e) {
             throw new Horde_Token_Exception($e);
         }

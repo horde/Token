@@ -18,6 +18,8 @@ declare(strict_types=1);
 
 namespace Horde\Token\Internal;
 
+use InvalidArgumentException;
+
 /**
  * Base64 URL-safe encoding/decoding
  *
@@ -56,7 +58,7 @@ final class Encoder
 
         $decoded = base64_decode($padded, strict: true);
         if ($decoded === false) {
-            throw new \InvalidArgumentException('Invalid base64 encoding');
+            throw new InvalidArgumentException('Invalid base64 encoding');
         }
 
         return $decoded;

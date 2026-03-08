@@ -47,7 +47,7 @@ class Horde_Token_Sql extends Horde_Token_Base
      * @param array $params Configuration parameters
      * @throws Horde_Token_Exception
      */
-    public function __construct($params = array())
+    public function __construct($params = [])
     {
         if (!isset($params['db'])) {
             throw new Horde_Token_Exception('Missing db parameter.');
@@ -56,9 +56,9 @@ class Horde_Token_Sql extends Horde_Token_Base
         $this->_db = $params['db'];
         unset($params['db']);
 
-        $params = array_merge(array(
+        $params = array_merge([
             'table' => 'horde_tokens',
-        ), $params);
+        ], $params);
 
         parent::__construct($params);
     }
@@ -89,7 +89,7 @@ class Horde_Token_Sql extends Horde_Token_Base
     {
         try {
             return $this->_storage->exists($tokenID);
-        } catch (\Horde\Token\Exception\StorageException $e) {
+        } catch (Horde\Token\Exception\StorageException $e) {
             throw new Horde_Token_Exception($e->getMessage(), 0, $e);
         }
     }
@@ -105,7 +105,7 @@ class Horde_Token_Sql extends Horde_Token_Base
     {
         try {
             $this->_storage->add($tokenID);
-        } catch (\Horde\Token\Exception\StorageException $e) {
+        } catch (Horde\Token\Exception\StorageException $e) {
             throw new Horde_Token_Exception($e->getMessage(), 0, $e);
         }
     }
@@ -120,7 +120,7 @@ class Horde_Token_Sql extends Horde_Token_Base
     {
         try {
             $this->_storage->purge();
-        } catch (\Horde\Token\Exception\StorageException $e) {
+        } catch (Horde\Token\Exception\StorageException $e) {
             throw new Horde_Token_Exception($e->getMessage(), 0, $e);
         }
     }

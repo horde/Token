@@ -42,8 +42,7 @@ final class TokenGenerator
      */
     public function __construct(
         private readonly TokenConfig $config
-    ) {
-    }
+    ) {}
 
     /**
      * Generate a new CSRF token

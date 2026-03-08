@@ -39,8 +39,7 @@ final class InMemoryStorage implements TokenStorageInterface
      */
     public function __construct(
         private readonly int $timeout = 86400
-    ) {
-    }
+    ) {}
 
     /**
      * Check if token exists in storage
@@ -75,7 +74,7 @@ final class InMemoryStorage implements TokenStorageInterface
 
         $this->tokens = array_filter(
             $this->tokens,
-            fn (int $timestamp): bool => $timestamp >= $cutoff
+            fn(int $timestamp): bool => $timestamp >= $cutoff
         );
     }
 

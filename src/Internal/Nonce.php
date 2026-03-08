@@ -18,6 +18,8 @@ declare(strict_types=1);
 
 namespace Horde\Token\Internal;
 
+use InvalidArgumentException;
+
 /**
  * Generates cryptographically secure nonces
  *
@@ -33,8 +35,7 @@ final readonly class Nonce
      */
     private function __construct(
         private string $bytes
-    ) {
-    }
+    ) {}
 
     /**
      * Generate a new nonce
@@ -58,7 +59,7 @@ final readonly class Nonce
     public static function fromBytes(string $bytes): self
     {
         if (strlen($bytes) !== 6) {
-            throw new \InvalidArgumentException('Nonce must be exactly 6 bytes');
+            throw new InvalidArgumentException('Nonce must be exactly 6 bytes');
         }
         return new self($bytes);
     }

@@ -42,7 +42,7 @@ abstract class Horde_Token_Base
      *
      * @var array
      */
-    protected $_params = array();
+    protected $_params = [];
 
     /**
      * PSR-4 Token service
@@ -77,10 +77,10 @@ abstract class Horde_Token_Base
             throw new Horde_Token_Exception('Missing secret parameter.');
         }
 
-        $params = array_merge(array(
+        $params = array_merge([
             'token_lifetime' => -1,
-            'timeout' => 86400
-        ), $params);
+            'timeout' => 86400,
+        ], $params);
 
         $this->_params = $params;
 
@@ -198,7 +198,7 @@ abstract class Horde_Token_Base
             try {
                 $this->_psr4Validator->validateUnique($token, $seed);
                 return true;
-            } catch (InvalidTokenException | ExpiredTokenException | UsedTokenException) {
+            } catch (InvalidTokenException|ExpiredTokenException|UsedTokenException) {
                 return false;
             }
         }
@@ -220,8 +220,8 @@ abstract class Horde_Token_Base
     {
         // Decode token to get nonce and hash first
         try {
-            $decoded = \Horde\Token\Internal\Encoder::decode($token);
-        } catch (\InvalidArgumentException $e) {
+            $decoded = Horde\Token\Internal\Encoder::decode($token);
+        } catch (InvalidArgumentException $e) {
             throw new Horde_Token_Exception_Invalid(
                 Horde_Token_Translation::t('We cannot verify that this request was really sent by you. It could be a malicious request. If you intended to perform this action, you can retry it now.')
             );
@@ -239,7 +239,7 @@ abstract class Horde_Token_Base
         // Now validate using PSR-4 (this will throw proper exceptions)
         try {
             // Validate signature
-            $expectedHash = \Horde\Token\Internal\Signer::sign($nonce . $seed, $this->_params['secret']);
+            $expectedHash = Horde\Token\Internal\Signer::sign($nonce . $seed, $this->_params['secret']);
             if (!hash_equals($expectedHash, $hash)) {
                 throw new InvalidTokenException('Invalid signature');
             }
@@ -247,14 +247,14 @@ abstract class Horde_Token_Base
             // Check expiration
             $timeoutToUse = $timeout ?? $this->_params['token_lifetime'];
             if ($timeoutToUse >= 0) {
-                $nonceObj = \Horde\Token\Internal\Nonce::fromBytes($nonce);
+                $nonceObj = Horde\Token\Internal\Nonce::fromBytes($nonce);
                 $age = time() - $nonceObj->timestamp();
                 if ($age >= $timeoutToUse) {
                     throw new ExpiredTokenException('Token expired');
                 }
             }
 
-            return array($nonce, $hash);
+            return [$nonce, $hash];
         } catch (ExpiredTokenException $e) {
             $timeoutToUse = $timeout ?? $this->_params['token_lifetime'];
             throw new Horde_Token_Exception_Expired(
@@ -300,7 +300,7 @@ abstract class Horde_Token_Base
      */
     public function getNonce()
     {
-        $nonce = \Horde\Token\Internal\Nonce::generate();
+        $nonce = Horde\Token\Internal\Nonce::generate();
         return $nonce->bytes();
     }
 
