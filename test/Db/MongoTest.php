@@ -17,6 +17,7 @@ namespace Horde\Token\Test\Db;
 use Horde\Token\Test\Unit\Legacy\BackendTestCase;
 use Horde_Mongo_Client;
 use Horde_Token_Mongo;
+use Exception;
 
 /**
  * Test the MongoDB token backend.
@@ -43,7 +44,7 @@ class MongoTest extends BackendTestCase
                 $this->_mongo = new Horde_Mongo_Client($config['token']['mongo']);
                 $this->_mongo->dbname = $this->_dbname;
                 $this->_mongo->selectDB(null)->drop();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->_mongo = null;
             }
         }

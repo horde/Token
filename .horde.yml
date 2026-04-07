@@ -14,8 +14,14 @@ authors:
     name: Gunnar Wrobel
     user: wrobel
     email: p@rdus.de
-    active: true
+    active: false
     role: lead
+  -
+    name: Ralf Lang
+    user: rlang
+    email: ralf.lang@ralf-lang.de
+    active: true
+    role: maintainer
   -
     name: Chuck Hagenbuch
     user: chuck
@@ -23,10 +29,10 @@ authors:
     active: false
     role: lead
 version:
-  release: 3.0.0-alpha7
+  release: 3.0.0-beta1
   api: 3.0.0alpha1
 state:
-  release: alpha
+  release: beta
   api: alpha
 license:
   identifier: LGPL-2.1-only
@@ -35,7 +41,6 @@ dependencies:
   dev:
     composer:
       horde/db: ^3
-      horde/test: ^3
   required:
     php: ^7.4 || ^8
     composer:
@@ -49,5 +54,6 @@ dependencies:
     composer:
       horde/db: ^3
       horde/mongo: ^2
-      horde/test: ^3
 vendor: horde
+keywords:
+  - csrf
