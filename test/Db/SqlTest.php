@@ -17,7 +17,8 @@
 namespace Horde\Token\Test\Db;
 
 use Horde\Token\Test\Unit\Legacy\BackendTestCase;
-use Horde_Test_Factory_Db;
+use Horde_Db_Adapter_Pdo_Sqlite;
+use Horde_Db_Migration_Migrator;
 use Horde_Token_Sql;
 
 /**
@@ -40,14 +41,17 @@ class SqlTest extends BackendTestCase
 
     public static function setUpBeforeClass(): void
     {
-        $factory_db = new Horde_Test_Factory_Db();
-
         if (class_exists('Horde_Db_Adapter_Pdo_Sqlite')) {
-            self::$_db = $factory_db->create([
-                'migrations' => [
-                    'migrationsPath' => __DIR__ . '/../../migration/Horde/Token',
-                ],
+            self::$_db = new Horde_Db_Adapter_Pdo_Sqlite([
+                'dbname' => ':memory:',
+                'charset' => 'utf-8',
             ]);
+            $migrator = new Horde_Db_Migration_Migrator(
+                self::$_db,
+                null,
+                ['migrationsPath' => __DIR__ . '/../../migration/Horde/Token']
+            );
+            $migrator->up();
         }
     }
 

@@ -15,7 +15,7 @@
 namespace Horde\Token\Test\Db;
 
 use Horde\Token\Test\Unit\Legacy\BackendTestCase;
-use Horde_Test_Factory_Mongo;
+use Horde_Mongo_Client;
 use Horde_Token_Mongo;
 
 /**
@@ -36,12 +36,16 @@ class MongoTest extends BackendTestCase
     protected function _getBackend(array $params = [])
     {
         if (($config = self::getConfig('TOKEN_MONGO_TEST_CONFIG', __DIR__ . '/..'))
-            && isset($config['token']['mongo'])) {
-            $factory = new Horde_Test_Factory_Mongo();
-            $this->_mongo = $factory->create([
-                'config' => $config['token']['mongo'],
-                'dbname' => $this->_dbname,
-            ]);
+            && isset($config['token']['mongo'])
+            && (extension_loaded('mongo') || extension_loaded('mongodb'))
+            && class_exists('Horde_Mongo_Client')) {
+            try {
+                $this->_mongo = new Horde_Mongo_Client($config['token']['mongo']);
+                $this->_mongo->dbname = $this->_dbname;
+                $this->_mongo->selectDB(null)->drop();
+            } catch (\Exception $e) {
+                $this->_mongo = null;
+            }
         }
 
         if (empty($this->_mongo)) {
