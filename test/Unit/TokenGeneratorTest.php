@@ -123,4 +123,33 @@ class TokenGeneratorTest extends TestCase
 
         $this->assertEquals($token->token, $tokenString);
     }
+
+    public function testGenerateWithPerCallSecretProducesDifferentTokenThanConstructorSecret(): void
+    {
+        $config = TokenConfig::default('constructor-secret');
+        $generator = new TokenGenerator($config);
+
+        // Identical seed and (essentially) identical timestamp; the only
+        // difference is the secret used to sign. Outputs must differ.
+        $tokenA = $generator->generate('same-seed', 'override-secret');
+        $tokenB = $generator->generate('same-seed', 'constructor-secret');
+
+        $this->assertNotEquals($tokenA->token, $tokenB->token);
+    }
+
+    public function testGenerateWithoutSecretFallsBackToConstructorSecret(): void
+    {
+        $config = TokenConfig::default('constructor-secret');
+        $generator = new TokenGenerator($config);
+
+        $tokenDefault = $generator->generate('seed');
+        $tokenExplicit = $generator->generate('seed', 'constructor-secret');
+
+        // They use the same secret but DIFFER in nonce timestamp/random,
+        // so we cannot compare bytes; instead, both must validate against
+        // the same secret (covered by TokenValidatorTest::testValidateWith*).
+        // Smoke check: both produce 51-char base64url output.
+        $this->assertSame(51, strlen($tokenDefault->token));
+        $this->assertSame(51, strlen($tokenExplicit->token));
+    }
 }

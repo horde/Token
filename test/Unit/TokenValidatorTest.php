@@ -183,4 +183,67 @@ class TokenValidatorTest extends TestCase
         // Old tokens should be purged, only new token remains
         $this->assertEquals(1, $storage->count());
     }
+
+    public function testIsValidAcceptsTokenSignedWithPerCallSecret(): void
+    {
+        $config = TokenConfig::default('constructor-secret');
+        $storage = new InMemoryStorage();
+        $generator = new TokenGenerator($config);
+        $validator = new TokenValidator($config, $storage);
+
+        $token = $generator->generate('seed', 'override-secret');
+
+        // Verifier must use the same per-call secret to validate
+        $this->assertTrue(
+            $validator->isValid($token->token, 'seed', null, 'override-secret')
+        );
+    }
+
+    public function testIsValidRejectsPerCallSignedTokenWhenSecretMismatches(): void
+    {
+        $config = TokenConfig::default('constructor-secret');
+        $storage = new InMemoryStorage();
+        $generator = new TokenGenerator($config);
+        $validator = new TokenValidator($config, $storage);
+
+        $token = $generator->generate('seed', 'secret-A');
+
+        // Wrong secret on verify side: must reject
+        $this->assertFalse(
+            $validator->isValid($token->token, 'seed', null, 'secret-B')
+        );
+
+        // Constructor secret on verify side: must also reject
+        $this->assertFalse(
+            $validator->isValid($token->token, 'seed', null, null)
+        );
+    }
+
+    public function testValidateUniqueAcceptsTokenSignedWithPerCallSecret(): void
+    {
+        $config = TokenConfig::default('constructor-secret');
+        $storage = new InMemoryStorage();
+        $generator = new TokenGenerator($config);
+        $validator = new TokenValidator($config, $storage);
+
+        $token = $generator->generate('seed', 'override-secret');
+
+        // Should not throw
+        $validator->validateUnique($token->token, 'seed', 'override-secret');
+
+        $this->assertTrue($storage->exists($token->token));
+    }
+
+    public function testValidateUniqueRejectsTokenWithMismatchedPerCallSecret(): void
+    {
+        $config = TokenConfig::default('constructor-secret');
+        $storage = new InMemoryStorage();
+        $generator = new TokenGenerator($config);
+        $validator = new TokenValidator($config, $storage);
+
+        $token = $generator->generate('seed', 'secret-A');
+
+        $this->expectException(InvalidTokenException::class);
+        $validator->validateUnique($token->token, 'seed', 'secret-B');
+    }
 }

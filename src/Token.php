@@ -138,24 +138,40 @@ final class Token
     /**
      * Generate a new CSRF token
      *
-     * @param string $seed Optional seed for context binding
+     * Pass a per-call $secret to sign with a different key without
+     * rebuilding the Token service. This is the preferred way to handle
+     * multiple secrets within one request (e.g., a service iterating
+     * sessions or composing tokens for several identities). Constructing
+     * a new Token per secret is feasible but wasteful — storage and
+     * config are invariant across calls.
+     *
+     * @param string      $seed   Optional seed for context binding
+     * @param string|null $secret Per-call secret override; null uses the
+     *                            configured secret.
      * @return GeneratedToken The generated token
      *
      * @example
      * $token = $service->generate('checkout_form');
      * echo $token->token;  // Use in form
+     *
+     * @example
+     * // Per-call secret without rebuilding the Token service
+     * $token = $service->generate('checkout_form', $session->getSecret());
      */
-    public function generate(string $seed = ''): GeneratedToken
+    public function generate(string $seed = '', ?string $secret = null): GeneratedToken
     {
-        return $this->generator->generate($seed);
+        return $this->generator->generate($seed, $secret);
     }
 
     /**
      * Check if token is valid (non-throwing version)
      *
-     * @param string $token The token to validate
-     * @param string $seed The seed used during generation
-     * @param int|null $timeout Custom timeout (null = use config)
+     * @param string      $token   The token to validate
+     * @param string      $seed    The seed used during generation
+     * @param int|null    $timeout Custom timeout (null = use config)
+     * @param string|null $secret  Per-call secret override; null uses the
+     *                             configured secret. See {@see generate()}
+     *                             for the rationale.
      * @return bool True if token is valid
      *
      * @example
@@ -166,16 +182,20 @@ final class Token
     public function isValid(
         string $token,
         string $seed = '',
-        ?int $timeout = null
+        ?int $timeout = null,
+        ?string $secret = null
     ): bool {
-        return $this->validator->isValid($token, $seed, $timeout);
+        return $this->validator->isValid($token, $seed, $timeout, $secret);
     }
 
     /**
      * Validate token and mark as used (one-time use)
      *
-     * @param string $token The token to validate
-     * @param string $seed The seed used during generation
+     * @param string      $token  The token to validate
+     * @param string      $seed   The seed used during generation
+     * @param string|null $secret Per-call secret override; null uses the
+     *                            configured secret. See {@see generate()}
+     *                            for the rationale.
      * @return void
      * @throws Exception\InvalidTokenException If signature is invalid
      * @throws Exception\ExpiredTokenException If token has expired
@@ -189,9 +209,9 @@ final class Token
      *     // Token invalid
      * }
      */
-    public function validateUnique(string $token, string $seed = ''): void
+    public function validateUnique(string $token, string $seed = '', ?string $secret = null): void
     {
-        $this->validator->validateUnique($token, $seed);
+        $this->validator->validateUnique($token, $seed, $secret);
     }
 
     /**
