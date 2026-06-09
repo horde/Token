@@ -229,4 +229,31 @@ class TokenTest extends TestCase
         $token->validateUnique($generated->token);
         $this->assertTrue(true); // Assert we got here
     }
+
+    public function testGenerateAndIsValidWithPerCallSecretRoundTrip(): void
+    {
+        $token = Token::null('constructor-secret');
+
+        // Sign with override; verify with same override; must validate.
+        $generated = $token->generate('seed', 'override-secret');
+        $this->assertTrue(
+            $token->isValid($generated->token, 'seed', null, 'override-secret')
+        );
+
+        // Verify with constructor secret; must reject.
+        $this->assertFalse(
+            $token->isValid($generated->token, 'seed')
+        );
+    }
+
+    public function testValidateUniqueWithPerCallSecretRoundTrip(): void
+    {
+        $token = Token::null('constructor-secret');
+
+        $generated = $token->generate('seed', 'override-secret');
+
+        // Same override must validate without throwing
+        $token->validateUnique($generated->token, 'seed', 'override-secret');
+        $this->assertTrue(true);
+    }
 }

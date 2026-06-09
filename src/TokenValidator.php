@@ -56,23 +56,37 @@ final class TokenValidator
      * Validates the token signature and expiration but does NOT
      * check for replay attacks or mark the token as used.
      *
-     * @param string $token The token to validate
-     * @param string $seed The seed used during generation
-     * @param int|null $timeout Custom timeout in seconds (null = use config)
+     * Pass a per-call $secret to verify with a different key without
+     * constructing a new TokenValidator. This is the preferred way for
+     * services that process multiple secrets in a single request — see
+     * {@see TokenGenerator::generate()} for the matching note.
+     *
+     * @param string      $token   The token to validate
+     * @param string      $seed    The seed used during generation
+     * @param int|null    $timeout Custom timeout in seconds (null = use config)
+     * @param string|null $secret  Per-call secret override; null uses the
+     *                             configured secret (default behaviour).
      * @return bool True if token is valid
      *
      * @example
      * if ($validator->isValid($token, 'form_id')) {
      *     // Token is valid
      * }
+     *
+     * @example
+     * // Per-call secret for session-bound verification without rebuilding
+     * if ($validator->isValid($token, 'form_id', null, $session->getSecret())) {
+     *     // ...
+     * }
      */
     public function isValid(
         string $token,
         string $seed = '',
-        ?int $timeout = null
+        ?int $timeout = null,
+        ?string $secret = null
     ): bool {
         try {
-            $this->validateInternal($token, $seed, $timeout, unique: false);
+            $this->validateInternal($token, $seed, $timeout, unique: false, secret: $secret);
             return true;
         } catch (InvalidTokenException|ExpiredTokenException) {
             return false;
@@ -87,8 +101,10 @@ final class TokenValidator
      * 2. Checks if token was previously used
      * 3. Marks token as used to prevent replay attacks
      *
-     * @param string $token The token to validate
-     * @param string $seed The seed used during generation
+     * @param string      $token  The token to validate
+     * @param string      $seed   The seed used during generation
+     * @param string|null $secret Per-call secret override; null uses the
+     *                            configured secret (default behaviour).
      * @return void
      * @throws InvalidTokenException If signature is invalid
      * @throws ExpiredTokenException If token has expired
@@ -102,18 +118,20 @@ final class TokenValidator
      *     // Token already used (replay attack)
      * }
      */
-    public function validateUnique(string $token, string $seed = ''): void
+    public function validateUnique(string $token, string $seed = '', ?string $secret = null): void
     {
-        $this->validateInternal($token, $seed, timeout: null, unique: true);
+        $this->validateInternal($token, $seed, timeout: null, unique: true, secret: $secret);
     }
 
     /**
      * Internal validation logic
      *
-     * @param string $token The token to validate
-     * @param string $seed The seed used during generation
-     * @param int|null $timeout Custom timeout (null = use config)
-     * @param bool $unique Whether to check for replay and mark as used
+     * @param string      $token   The token to validate
+     * @param string      $seed    The seed used during generation
+     * @param int|null    $timeout Custom timeout (null = use config)
+     * @param bool        $unique  Whether to check for replay and mark as used
+     * @param string|null $secret  Per-call secret override; null uses the
+     *                             configured secret.
      * @return void
      * @throws InvalidTokenException If signature is invalid or token is malformed
      * @throws ExpiredTokenException If token has expired
@@ -123,7 +141,8 @@ final class TokenValidator
         string $token,
         string $seed,
         ?int $timeout,
-        bool $unique
+        bool $unique,
+        ?string $secret = null
     ): void {
         // Decode token from Base64 URL format
         try {
@@ -142,7 +161,10 @@ final class TokenValidator
         $signature = substr($decoded, 6);
 
         // Verify signature
-        $expectedSignature = Signer::sign($nonceBytes . $seed, $this->config->secret);
+        $expectedSignature = Signer::sign(
+            $nonceBytes . $seed,
+            $secret ?? $this->config->secret
+        );
         if (!hash_equals($expectedSignature, $signature)) {
             throw new InvalidTokenException('Invalid token signature');
         }
